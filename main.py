@@ -13,12 +13,23 @@ def display_board():
 def get_player_move(player):
   print("\nPlayer " + player)
   while True:
-    move = int(input("Please input your move (1-9): ")) - 1
+    move = get_input()
     if check_position(move):
       break
     else:
       print("Invalid move, try again.")
   return move
+
+
+def get_input():
+  while True:
+    string = input("Please input your move (1-9): ")
+    try:
+      move = int(string)
+      if move >= 1 and move <= 9:
+        return move-1
+    except:
+      pass
 
 
 def check_position(position):
@@ -93,17 +104,17 @@ def board_full():
 
 def play():
   player = "X"
-  win = False
   print("Welcome to tic tact toe.")
   print("First player to play is " + player)
   display_board()
-  while not win and not board_full():
+
+  while not check_win() and not board_full():
     player_turn(player)
-    win = check_win()
-    if win:
+    if check_win():
       print("\nCongrats player " + player + " !")
     player = switch_player(player)
-  if board_full and not win:
+
+  if board_full() and not check_win():
       print("Board is full. Game tie.")
 
 
