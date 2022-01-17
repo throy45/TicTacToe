@@ -3,6 +3,8 @@ board = [
   "-", "-", "-", 
   "-", "-", "-"]
 
+player = "X"
+
 
 def display_board():
   print(board[0] + " | " + board[1] + " | " + board[2])
@@ -41,11 +43,12 @@ def update_board_with_symbol_at_position(symbol, position):
   board[position] = symbol
 
 
-def switch_player(player):
+def switch_player():
+  global player
   if player == "X":
-    return "O"
+    player = "O"
   else:
-    return "X"
+    player = "X"
 
 
 def check_win():
@@ -103,8 +106,8 @@ def board_full():
 
 
 def play():
-  player = "X"
-  print("Welcome to tic tact toe.")
+  global player
+  print("Welcome to tic tac toe.")
   print("First player to play is " + player)
   display_board()
 
@@ -112,12 +115,27 @@ def play():
     player_turn(player)
     if check_win():
       print("\nCongrats player " + player + " !")
-    player = switch_player(player)
+    switch_player()
 
   if board_full() and not check_win():
       print("Board is full. Game tie.")
 
 
+def play_again():
+  while True:
+    return input("Play again?: ").lower() in ['true', '1', 't', 'y', 'yes', 'yeah', 'yup', 'certainly', 'uh-huh', 'oui']
+
+
+def reset_board():
+  global board
+  board = [
+            "-", "-", "-", 
+            "-", "-", "-", 
+            "-", "-", "-"]
 
 
 play()
+while play_again():
+  reset_board()
+  print("")
+  play()
